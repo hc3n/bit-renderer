@@ -1,17 +1,23 @@
-#include "bitwidget.h"
+#include "bittransformer.h"
 #include <QDebug>
+#include <QFile>
 
 
-BitWidget::BitWidget(QWidget *parent)
-    : QWidget(parent)
+BitTransformer::BitTransformer(QObject *parent)
+    : QObject(parent)
 {
-
 }
 
-void BitWidget::obrabotkaBin(const QString &filename,QVector<bool> &bitVector)
+QVector<bool> BitTransformer::loadBitsFromBinary(const QString &filename)
 {
+    QVector<bool> bitVector;
     bitVector.clear();
+
     QFile filebin(filename);
+    if (!filebin.open(QIODevice::ReadOnly)) {
+        qWarning() << filebin.errorString();
+        return bitVector;
+    }
 
 
         QByteArray byteArray = filebin.readAll();
@@ -27,13 +33,10 @@ void BitWidget::obrabotkaBin(const QString &filename,QVector<bool> &bitVector)
                 bitVector.append(bit);
             }
         }
-
-
-
-
+        return bitVector;
 };
 
-QImage BitWidget::risovalka(const QVector<bool> &bitVector,int period)
+QImage BitTransformer::bitVectorToImage(const QVector<bool> &bitVector,int period)
 {
     int height = bitVector.size() / period;
     int width = period;
@@ -41,7 +44,7 @@ QImage BitWidget::risovalka(const QVector<bool> &bitVector,int period)
     /* format_indexed8 8 бит = 1 байт */
     QImage image(width,height,QImage::Format_Indexed8);
     uchar *data = image.bits(); // data - указатель на первый пиксель в памяти
-    // используем два цвета через индексированную палитру
+    // используем два цвета через индексированную палитру (надо поменять)
     image.setColor(0,qRgb(0,0,0)); // black
     image.setColor(1,qRgb(0,255,0)); // green
 

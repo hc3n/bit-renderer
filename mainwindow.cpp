@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "bitwidget.h"
+#include "bittransformer.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     imageLabel->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(imageLabel);
 
-    bitWidget = new BitWidget(this);
-    bitWidget->obrabotkaBin("/Users/timofey/Documents/renderer/renderer/test_long_1504.bin",bitVector);
+
+    bitVector = BitTransformer::loadBitsFromBinary("/Users/timofey/Documents/renderer/signal/test_short_1504.bin");
 
 }
 
@@ -54,7 +54,7 @@ void MainWindow::spinValueChanged() {
     int period = spinBox->value();
     outputLabel->setText("Текущий период: " + QString::number(period));
 
-    QImage img = bitWidget ->risovalka(bitVector,period);
+    QImage img = BitTransformer::bitVectorToImage(bitVector,period);
     imageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     imageLabel->setPixmap(QPixmap::fromImage(img).scaled(imageLabel->size()));
 
