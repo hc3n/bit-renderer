@@ -3,7 +3,7 @@
 #include <QImage>
 #include <QVector>
 #include <QString>
-#include <QBitArray>
+
 
 class BitTransformer : public QObject
 {

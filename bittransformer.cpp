@@ -19,13 +19,9 @@ QVector<bool> BitTransformer::loadBitsFromBinary(const QString &filename)
         return bitVector;
     }
 
-
-        QByteArray byteArray = filebin.readAll();
-
+    QByteArray byteArray = filebin.readAll();
 
     filebin.close();
-
-
 
         for (char byte : byteArray) {
             for(int i = 7; i >= 0 ; --i) {
@@ -38,19 +34,32 @@ QVector<bool> BitTransformer::loadBitsFromBinary(const QString &filename)
 
 QImage BitTransformer::bitVectorToImage(const QVector<bool> &bitVector,int period)
 {
-    int height = bitVector.size() / period;
+
+    /* Вводим totalSize для того, чтобы увеличить общий размер рисунка
+    * и избежать потери данных. Заполняем остаток черными пикселями.
+    * Картинка QImage будет иметь правильные размеры */
+
+    int size = bitVector.size();
+    int remainder = size % period;
+    int totalSize = size;
+    if (remainder != 0)
+        totalSize = (period - remainder) + size;
+
+    int height = totalSize / period;
     int width = period;
 
-    /* format_indexed8 8 бит = 1 байт */
-    QImage image(width,height,QImage::Format_Indexed8);
-    uchar *data = image.bits(); // data - указатель на первый пиксель в памяти
-    // используем два цвета через индексированную палитру (надо поменять)
-    image.setColor(0,qRgb(0,0,0)); // black
-    image.setColor(1,qRgb(0,255,0)); // green
+    QImage image(width,height,QImage::Format_RGB32);
+    QRgb green = qRgb(0,255,0);
+    QRgb black = qRgb(0,0,0);
+    QRgb *pixels = reinterpret_cast<QRgb*>(image.bits());
+    QRgb *p = pixels;
 
-    for(int i=0; i<bitVector.size();++i)
+    for(int i=0; i<totalSize;++i,++p)
     {
-        data[i] = bitVector[i] ? 1 : 0;
+        if (i < size)
+            *p =bitVector[i] ? green : black;
+        else
+            *p = black;
     }
 
     return image;
