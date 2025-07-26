@@ -1,4 +1,4 @@
-#include "bittransformer.h"
+#include "bittransformerlib.h"
 #include <QDebug>
 #include <QFile>
 
@@ -23,13 +23,13 @@ QVector<bool> BitTransformer::loadBitsFromBinary(const QString &filename)
 
     filebin.close();
 
-        for (char byte : byteArray) {
-            for(int i = 7; i >= 0 ; --i) {
-                bool bit = (byte >> i) & 1;
-                bitVector.append(bit);
-            }
+    for (char byte : byteArray) {
+        for(int i = 7; i >= 0 ; --i) {
+            bool bit = (byte >> i) & 1;
+            bitVector.append(bit);
         }
-        return bitVector;
+    }
+    return bitVector;
 };
 
 QImage BitTransformer::bitVectorToImage(const QVector<bool> &bitVector,int period)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QObject>
 #include <QImage>
 #include <QVector>
 #include <QString>
@@ -7,7 +8,7 @@
 
 class BitTransformer : public QObject
 {
-   Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit BitTransformer(QObject *parent = nullptr);

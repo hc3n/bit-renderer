@@ -17,9 +17,11 @@ add_executable(${PROJECT_NAME}
     main.cpp
     mainwindow.cpp
     mainwindow.h
-    bittransformer.cpp
-    bittransformer.h
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets)
+add_subdirectory(bittransformerlib)
 
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE Qt5::Widgets
+    PRIVATE bittransformerlib
+)

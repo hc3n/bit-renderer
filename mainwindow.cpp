@@ -1,6 +1,7 @@
 #include "mainwindow.h"
-#include "bittransformer.h"
 
+
+#include "bittransformerlib/bittransformerlib.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
