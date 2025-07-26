@@ -55,4 +55,38 @@ CMakeLists.txt.user*
 *.qmlproject.user
 *.qmlproject.user.*
 
+# macOS system files
 .DS_Store
+
+# CMake build files and folders
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+
+# Qt moc, uic, rcc generated files
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# Build folders (если используешь)
+build/
+bin/
+lib/
+obj/
+
+# IDE folders and files
+.vscode/
+.idea/
+*.suo
+*.ncb
+*.vcxproj*
+*.vcproj*
+
+# Temporary files and backups
+*~
+*.swp
+*.tmp
+*.log
+*.bak
