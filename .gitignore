@@ -90,3 +90,8 @@ obj/
 *.tmp
 *.log
 *.bak
+
+#cmake files
+*.idx
+*.cmake
+*.json
